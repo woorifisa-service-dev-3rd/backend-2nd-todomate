@@ -26,11 +26,6 @@ public class TodoController {
     @Autowired
     private final UserService userService;
 
-//    @GetMapping("/list")
-//    public String todoList() {
-//        return "redirect:/todos/todoList";
-//    }
-
     @GetMapping("/addTodo")
     public String processAddForm(Model model) {
         model.addAttribute("todo", Todo.builder().option(Option.TO_DO).build());
@@ -61,4 +56,17 @@ public class TodoController {
         model.addAttribute("todos", todos);
         return "todoList";
     }
+
+    @GetMapping("/createOrUpdateTodoForm")
+    public String createOrUpdateTodoForm(@RequestParam(name = "id", required = false) Long id, Model model) {
+        Todo todo;
+        if (id != null) {
+            todo = todoService.getTodoById(id); // ID가 제공되면 해당 Todo를 가져옵니다.
+        } else {
+            todo = new Todo(); // ID가 없으면 새 Todo 객체를 생성합니다.
+        }
+        model.addAttribute("todo", todo);
+        return "createOrUpdateTodoForm"; // 수정 또는 생성 폼 JSP 파일 이름
+    }
+
 }

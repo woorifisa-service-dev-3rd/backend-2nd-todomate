@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -22,5 +23,9 @@ public class TodoServiceImpl implements TodoService {
 
     public List<Todo> getAllTodos() {
         return todoRepository.findAll();
+    }
+
+    public Todo getTodoById(Long id) {
+        return todoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Todo not found with id " + id));
     }
 }
