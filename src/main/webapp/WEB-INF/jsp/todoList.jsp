@@ -13,26 +13,16 @@
     <h1>Todos</h1>
 
     <!-- Add Todo 버튼 -->
-    <form action="addTodo.jsp" method="get">
+    <form action="/todos/addTodo" method="get">
         <input type="submit" value="Add Todo">
     </form>
-
     <br>
 
     <!-- Todo 리스트 -->
     <ul>
-        <%
-            // 가상의 Todo 리스트 (서버에서 가져온 데이터라고 가정)
-            List<String> todos = new ArrayList<>();
-            todos.add("Learn Java");
-            todos.add("Build a Todo App");
-            todos.add("Study JSP");
-
-            // 필터 없이 모든 Todo 리스트 출력
-            for (String todo : todos) {
-                out.println("<li>" + todo + "</li>");
-            }
-        %>
+        <c:forEach var="todo" items="${todos}">
+            <li>${todo.title} - ${todo.summary} - ${todo.option}</li>
+        </c:forEach>
     </ul>
 
 </body>

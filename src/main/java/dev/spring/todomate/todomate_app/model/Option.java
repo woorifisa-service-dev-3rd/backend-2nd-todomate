@@ -5,6 +5,7 @@ public enum Option {
     ON_PROGRESS("On Progress"),
     DONE("Done");
 
+
     private final String option;
 
     Option(String option) {
