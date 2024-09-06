@@ -19,18 +19,6 @@
 
     <br>
 
-    <!-- Todo 필터링용 select 박스 -->
-    <form method="get" action="TodoList.jsp">
-        <label for="filter">Filter Todos:</label>
-        <select name="filter" id="filter" onchange="this.form.submit()">
-            <option value="all">All</option>
-            <option value="completed">Completed</option>
-            <option value="pending">Pending</option>
-        </select>
-    </form>
-
-    <br>
-
     <!-- Todo 리스트 -->
     <ul>
         <%
@@ -40,17 +28,9 @@
             todos.add("Build a Todo App");
             todos.add("Study JSP");
 
-            // 필터링 로직 (기본은 "all"로 설정)
-            String filter = request.getParameter("filter");
-            if (filter == null || filter.equals("all")) {
-                filter = "all";
-            }
-
-            // Todo 리스트 출력
+            // 필터 없이 모든 Todo 리스트 출력
             for (String todo : todos) {
-                if (filter.equals("all") || (filter.equals("completed") && todo.startsWith("Learn")) || (filter.equals("pending") && !todo.startsWith("Learn"))) {
-                    out.println("<li>" + todo + "</li>");
-                }
+                out.println("<li>" + todo + "</li>");
             }
         %>
     </ul>
