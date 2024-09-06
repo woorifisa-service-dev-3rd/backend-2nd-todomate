@@ -1,6 +1,5 @@
 package dev.spring.todomate.todomate_app.controller;
 
-import dev.spring.todomate.todomate_app.model.Option;
 import dev.spring.todomate.todomate_app.model.Todo;
 import dev.spring.todomate.todomate_app.model.User;
 import dev.spring.todomate.todomate_app.service.TodoService;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Controller
@@ -26,10 +25,16 @@ public class TodoController {
     @Autowired
     private final UserService userService;
 
-
     @GetMapping("/list")
     public String showTodoList(Model model) {
         List<Todo> todos = todoService.getAllTodos();
+        
+        // D-day 계산하기
+        for (Todo todo: todos) {
+            Long daysBetween = ChronoUnit.DAYS.between(todo.getStartDate(), todo.getDueDate());
+            todo.setDayUntilDue(daysBetween);
+        }
+        
         model.addAttribute("todos", todos);
         return "todoList";
     }
@@ -54,9 +59,6 @@ public class TodoController {
 
     @PostMapping("/add")
     public String addTodo(@ModelAttribute Todo todo) {
-        todo.setStartDate(LocalDate.now());
-        todo.setDueDate(LocalDate.now());
-
         // 로그인 세션에서 User id를 가져와서 Repository에서 해당하는 id를 가져와서 해야하는데, 우선은 test용으로 1을 넣고 해 보자
         // User service에서 findbyid 가져오기
         // 여기에 setter로 해당 id 넣어주기
@@ -71,9 +73,6 @@ public class TodoController {
 
     @PostMapping("/update")
     public String updateTodo(@ModelAttribute Todo todo) {
-        todo.setStartDate(LocalDate.now());
-        todo.setDueDate(LocalDate.now());
-
         // 테스트용 ID: 1
         Long userId = 1L;
         User user = userService.findById(userId);

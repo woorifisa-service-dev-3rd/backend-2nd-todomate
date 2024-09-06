@@ -28,6 +28,11 @@
                 <option value="DONE" ${todo.option == 'DONE' ? 'selected' : ''}>DONE</option>
             </select>
 
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" value="${todo.startDate}" required/>
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" name="dueDate" value="${todo.dueDate}" required/>
+
         <button type="submit">${todo.id == null ? 'Add Todo' : 'Update Todo'}</button>
     </form>
 </section>

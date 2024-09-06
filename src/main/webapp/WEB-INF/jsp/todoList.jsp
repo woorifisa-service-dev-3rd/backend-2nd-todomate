@@ -27,7 +27,7 @@
     <ul>
         <c:forEach var="todo" items="${todos}">
             <li onclick="redirectToEdit(${todo.id})" style="cursor: pointer;">
-                ${todo.title} - ${todo.summary} - ${todo.option}
+                ${todo.title} - ${todo.summary} - ${todo.option} - ${todo.dayUntilDue}
             </li>
         </c:forEach>
     </ul>

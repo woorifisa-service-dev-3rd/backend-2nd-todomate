@@ -15,6 +15,10 @@ import java.time.LocalDate;
 @AttributeOverride(name= "id", column = @Column(name = "todo_id"))
 public class Todo extends BaseEntity{
 
+    // DB와 매핑하지 않음
+    @Transient
+    private Long dayUntilDue;
+
     @Column(name = "todo_title", nullable = false)
     private String title;
 
@@ -51,14 +55,15 @@ public class Todo extends BaseEntity{
         this.option = option;
     }
 
-
     public void setTitle(String title) {
         this.title = title;
     }
-
 
     public void setSummary(String summary) {
         this.summary = summary;
     }
 
+    public void setDayUntilDue(Long dayUntilDue) {
+        this.dayUntilDue = dayUntilDue;
+    }
 }
