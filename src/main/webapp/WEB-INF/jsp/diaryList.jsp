@@ -3,35 +3,40 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diary List</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+    <title>Diaries</title>
 </head>
 <body>
-<header>
-    <div class="flex justify-center">
-        <a href="${pageContext.request.contextPath}/" class="flex">
-            <h1 class="py-8 text-red-200 max-w-max text-7xl">Diaries</h1>
-        </a>
-    </div>
-</header>
-<section class="max-w-xl m-4 mx-auto">
-    <!-- 다이어리 추가 폼 -->
-    <form action="${pageContext.request.contextPath}/diary/add" method="post">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
 
-        <label for="content">Content:</label>
-        <textarea id="content" name="content" required></textarea>
+<h1>Diaries</h1>
 
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required>
+<!-- Add Diary 버튼 -->
+<form action="/diaries/add" method="get">
+    <input type="submit" value="Add Diary">
+</form>
 
-        <button type="submit">Add Diary</button>
-    </form>
-</section>
+<br>
+
+<%--<!-- Diary 리스트 -->--%>
+<%--<ul>--%>
+<%--    <c:forEach var="diary" items="${diaries}">--%>
+<%--        <li>${diary.title}</li>--%>
+<%--        <li>${diary.content}</li>--%>
+<%--        <li>${diary.date}</li>--%>
+<%--    </c:forEach>--%>
+<%--</ul>--%>
+
+<!-- Diary 리스트 -->
+<ul>
+    <c:forEach var="diary" items="${diaries}">
+        <li>
+            <a href="/diaries/${diary.id}/edit">${diary.title}</a>
+        </li>
+        <li>${diary.content}</li>
+        <li>${diary.date}</li>
+    </c:forEach>
+</ul>
+
 </body>
 </html>
