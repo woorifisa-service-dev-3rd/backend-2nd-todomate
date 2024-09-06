@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
@@ -16,20 +15,20 @@ import java.util.Date;
 @AttributeOverride(name= "id", column = @Column(name = "todo_id"))
 public class Todo extends BaseEntity{
 
-    @Column(name = "todo_title")
+    @Column(name = "todo_title", nullable = false)
     private String title;
 
-    @Column(name = "todo_summary")
+    @Column(name = "todo_summary", nullable = false)
     private String summary;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "todo_options")
+    @Column(name = "todo_options", nullable = false)
     private Option option;
 
-    @Column(name = "todo_startdate")
+    @Column(name = "todo_startdate", nullable = false)
     private LocalDate startDate;
 
-    @Column(name = "todo_duedate")
+    @Column(name = "todo_duedate", nullable = false)
     private LocalDate dueDate;
 
     @ManyToOne
@@ -47,4 +46,19 @@ public class Todo extends BaseEntity{
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void setOption(Option option) {
+        this.option = option;
+    }
+
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
 }

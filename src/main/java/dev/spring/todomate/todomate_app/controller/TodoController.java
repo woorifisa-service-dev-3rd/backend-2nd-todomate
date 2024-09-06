@@ -28,25 +28,28 @@ public class TodoController {
 
     @GetMapping("/addTodo")
     public String processAddForm(Model model) {
-        model.addAttribute("todo", Todo.builder().option(Option.TO_DO).build());
+        model.addAttribute("todo", Todo.builder().build());
         return "createOrUpdateTodoForm";
     }
 
     @PostMapping("/add")
     public String addTodo(@ModelAttribute Todo todo) {
+        System.out.println("todo = " + todo);
         todo.setStartDate(LocalDate.now());
         todo.setDueDate(LocalDate.now());
 
         // 로그인 세션에서 User id를 가져와서 Repository에서 해당하는 id를 가져와서 해야하는데, 우선은 test용으로 1을 넣고 해 보자
         // User service에서 findbyid 가져오기
         // 여기에 setter로 해당 id 넣어주기
-        // todo.setUser(User.builder().build());
-
         // 테스트용 User ID: 1
         Long userId = 1L;
         User user = userService.findById(userId);
         todo.setUser(user);
         todoService.addTodoDetails(todo);
+
+        System.out.println("user = " + user);
+        System.out.println("todo = " + todo);
+
         return "redirect:/todos/list";
     }
 

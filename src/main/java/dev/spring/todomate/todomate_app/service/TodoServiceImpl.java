@@ -1,6 +1,5 @@
 package dev.spring.todomate.todomate_app.service;
 
-import dev.spring.todomate.todomate_app.model.Option;
 import dev.spring.todomate.todomate_app.model.Todo;
 import dev.spring.todomate.todomate_app.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
