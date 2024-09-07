@@ -9,4 +9,5 @@ public interface DiaryService {
     Diary addDiary(Long userId, Diary diary);
     Diary updateDiary(Long userId, Long diaryId, Diary updatedDiary);
     Diary findById(Long diaryId);
+    void deleteDiary(Long userId, Long diaryId);
 }

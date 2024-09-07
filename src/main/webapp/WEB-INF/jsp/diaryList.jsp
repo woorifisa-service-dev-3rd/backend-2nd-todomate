@@ -26,6 +26,12 @@
         </li>
         <li>${diary.content}</li>
         <li>${diary.date}</li>
+        <li>
+            <!-- 삭제 버튼 -->
+            <form action="/diaries/${diary.id}/delete" method="post" style="display:inline;">
+                <input type="submit" value="Delete">
+            </form>
+        </li>
     </c:forEach>
 </ul>
 

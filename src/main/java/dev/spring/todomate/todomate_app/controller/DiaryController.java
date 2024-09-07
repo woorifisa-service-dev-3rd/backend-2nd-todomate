@@ -57,11 +57,19 @@ public class DiaryController {
     }
 
     @PostMapping("/{diaryId}/edit")
-    public String editDiaryForm(@PathVariable Long diaryId, HttpServletRequest request, Diary diary) {
+    public String editDiary(@PathVariable Long diaryId, HttpServletRequest request, Diary diary) {
         HttpSession session = request.getSession();
         Long userId = (Long) session.getAttribute("userId");
         Diary updatedDiary = diaryService.updateDiary(1L, diaryId, diary);
         log.debug("updatedDiary = " + updatedDiary);
+        return "redirect:/diaries/list";
+    }
+
+    @PostMapping("/{diaryId}/delete")
+    public String deleteDiary(@PathVariable Long diaryId, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long userId = (Long) session.getAttribute("userId");
+        diaryService.deleteDiary(1L, diaryId);
         return "redirect:/diaries/list";
     }
 }

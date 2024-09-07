@@ -51,4 +51,11 @@ public class DiaryServiceImpl implements DiaryService {
     public Diary findById(Long diaryId) {
         return diaryRepository.findById(diaryId).orElseThrow();
     }
+
+    @Override
+    public void deleteDiary(Long userId, Long diaryId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        Diary foundDiary = diaryRepository.findDiaryByUserIdAndId(user.getId(), diaryId).orElseThrow();
+        diaryRepository.deleteById(foundDiary.getId());
+    }
 }
