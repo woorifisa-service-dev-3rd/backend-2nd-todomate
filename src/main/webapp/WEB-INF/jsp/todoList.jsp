@@ -29,6 +29,11 @@
             <li onclick="redirectToEdit(${todo.id})" style="cursor: pointer;">
                 ${todo.title} - ${todo.summary} - ${todo.option} - ${todo.dayUntilDue}
             </li>
+            <!-- 삭제 폼 -->
+            <form action="${pageContext.request.contextPath}/todos/delete/${todo.id}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit">삭제</button>
+            </form>
         </c:forEach>
     </ul>
 

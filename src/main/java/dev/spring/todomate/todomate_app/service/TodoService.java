@@ -8,4 +8,5 @@ public interface TodoService {
     void addTodoDetails(Todo todo);
     List<Todo> getAllTodos();
     Todo getTodoById(Long id);
+    void delete(Long id);
 }

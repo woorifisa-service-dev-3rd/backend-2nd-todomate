@@ -82,4 +82,10 @@ public class TodoController {
         return "redirect:/todos/list";
 
     }
+
+    @DeleteMapping("/delete/{id}")
+    public String todoDelete(@PathVariable Long id){
+        this.todoService.delete(id);
+        return "redirect:/todos/list";
+    }
 }

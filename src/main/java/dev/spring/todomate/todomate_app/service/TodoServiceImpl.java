@@ -27,4 +27,9 @@ public class TodoServiceImpl implements TodoService {
     public Todo getTodoById(Long id) {
         return todoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Todo not found with id " + id));
     }
+
+    public void delete(Long id){
+        Todo todo = todoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당하는 Todo 항목이 없습니다. id=" + id));
+        this.todoRepository.delete(todo);
+    }
 }
