@@ -27,7 +27,7 @@ public class UserController {
         session.setAttribute("username", userOptional.get().getUsername());
         return "redirect:/";
       } else {
-        return "redirect:/login?error";
+        return "redirect:/";
       }
   }
 
