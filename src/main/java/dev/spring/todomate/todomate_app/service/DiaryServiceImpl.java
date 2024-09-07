@@ -42,9 +42,9 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public Diary updateDiary(Long userId, Long diaryId, Diary updatedDiary) {
         User user = userRepository.findById(userId).orElseThrow();
-        Diary diary = diaryRepository.findById(diaryId).orElseThrow();
-        diary.updateDiary(updatedDiary);
-        return diary;
+        Diary foundDiary = diaryRepository.findDiaryByUserIdAndId(user.getId(), diaryId).orElseThrow();
+        foundDiary.updateDiary(updatedDiary);
+        return foundDiary;
     }
 
     @Override
