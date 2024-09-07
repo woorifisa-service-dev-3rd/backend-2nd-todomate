@@ -1,3 +1,4 @@
+<%@ page import="java.time.LocalDate" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -28,10 +29,10 @@
                 <option value="DONE" ${todo.option == 'DONE' ? 'selected' : ''}>DONE</option>
             </select>
 
-        <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" name="startDate" value="${todo.startDate}" required/>
-        <label for="dueDate">Due Date:</label>
-        <input type="date" id="dueDate" name="dueDate" value="${todo.dueDate}" required/>
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate" min="<%= LocalDate.now().toString() %>" value="${todo.startDate}" required/>
+            <label for="dueDate">Due Date:</label>
+            <input type="date" id="dueDate" name="dueDate" min="<%= LocalDate.now().toString() %>" value="${todo.dueDate}" required/>
 
         <button type="submit">${todo.id == null ? 'Add Todo' : 'Update Todo'}</button>
     </form>

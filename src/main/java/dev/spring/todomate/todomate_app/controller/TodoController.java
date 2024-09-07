@@ -34,7 +34,6 @@ public class TodoController {
             Long daysBetween = ChronoUnit.DAYS.between(todo.getStartDate(), todo.getDueDate());
             todo.setDayUntilDue(daysBetween);
         }
-        
         model.addAttribute("todos", todos);
         return "todoList";
     }
@@ -67,7 +66,6 @@ public class TodoController {
         User user = userService.findById(userId);
         todo.setUser(user);
         todoService.addTodoDetails(todo);
-
         return "redirect:/todos/list";
     }
 
@@ -78,7 +76,6 @@ public class TodoController {
         User user = userService.findById(userId);
         todo.setUser(user);
         todoService.addTodoDetails(todo);
-
         return "redirect:/todos/list";
 
     }
