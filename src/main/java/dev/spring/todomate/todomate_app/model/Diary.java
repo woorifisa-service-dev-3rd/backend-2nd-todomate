@@ -3,7 +3,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -32,6 +31,5 @@ public class Diary extends BaseEntity{
     public void updateDiary(Diary diaryToUpdate) {
         this.title = diaryToUpdate.getTitle();
         this.content = diaryToUpdate.getContent();
-        this.date = diaryToUpdate.getDate();
     }
 }

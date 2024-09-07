@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -58,13 +56,12 @@ public class DiaryController {
         return "createOrUpdateDiaryForm";
     }
 
-    // 수정 필요!
     @PostMapping("/{diaryId}/edit")
     public String editDiaryForm(@PathVariable Long diaryId, HttpServletRequest request, Diary diary) {
         HttpSession session = request.getSession();
         Long userId = (Long) session.getAttribute("userId");
-        diaryService.updateDiary(userId, diaryId, diary);
-
+        Diary updatedDiary = diaryService.updateDiary(1L, diaryId, diary);
+        log.debug("updatedDiary = " + updatedDiary);
         return "redirect:/diaries/list";
     }
 }
