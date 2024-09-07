@@ -18,15 +18,6 @@
 
 <br>
 
-<%--<!-- Diary 리스트 -->--%>
-<%--<ul>--%>
-<%--    <c:forEach var="diary" items="${diaries}">--%>
-<%--        <li>${diary.title}</li>--%>
-<%--        <li>${diary.content}</li>--%>
-<%--        <li>${diary.date}</li>--%>
-<%--    </c:forEach>--%>
-<%--</ul>--%>
-
 <!-- Diary 리스트 -->
 <ul>
     <c:forEach var="diary" items="${diaries}">
