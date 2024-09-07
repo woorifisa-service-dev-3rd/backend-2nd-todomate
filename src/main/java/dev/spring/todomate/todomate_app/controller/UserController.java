@@ -22,7 +22,6 @@ public class UserController {
   @PostMapping("/login")
   public String login(@RequestParam String username, @RequestParam String password, HttpSession session){
       Optional<User> userOptional = userService.findByUsername(username);
-    System.out.println("username" + username);
 
       if (userOptional.isPresent() && userOptional.get().getPassword().equals(password)) {
         session.setAttribute("username", userOptional.get().getUsername());
