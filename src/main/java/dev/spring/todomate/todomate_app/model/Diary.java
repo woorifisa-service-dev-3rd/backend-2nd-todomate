@@ -1,4 +1,5 @@
 package dev.spring.todomate.todomate_app.model;
+import dev.spring.todomate.todomate_app.dto.DiaryRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,5 +32,14 @@ public class Diary extends BaseEntity{
     public void updateDiary(Diary diaryToUpdate) {
         this.title = diaryToUpdate.getTitle();
         this.content = diaryToUpdate.getContent();
+    }
+
+    public static Diary from(DiaryRequest diaryRequest, User user) {
+        return Diary.builder()
+                .title(diaryRequest.getTitle())
+                .content(diaryRequest.getContent())
+                .date(LocalDate.now())
+                .user(user)
+                .build();
     }
 }

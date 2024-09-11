@@ -1,5 +1,6 @@
 package dev.spring.todomate.todomate_app.controller;
 
+import dev.spring.todomate.todomate_app.dto.DiaryRequest;
 import dev.spring.todomate.todomate_app.dto.DiaryResponse;
 import dev.spring.todomate.todomate_app.model.Diary;
 import dev.spring.todomate.todomate_app.service.DiaryService;
@@ -39,9 +40,10 @@ public class DiaryController {
     }
 
     @GetMapping("/add")
-    public String showAddDiaryForm(Model model) {
-        model.addAttribute(Diary.builder().build());
-        return "createOrUpdateDiaryForm";
+    public ResponseEntity<DiaryResponse> addDiary(HttpSession session, DiaryRequest diaryRequest) {
+        Long userId = getUserIdFromSession(session);
+        DiaryResponse diary = diaryService.addDiary(userId, diaryRequest);
+        return new ResponseEntity<>(diary, HttpStatus.CREATED);
     }
 
     @PostMapping("/add")
