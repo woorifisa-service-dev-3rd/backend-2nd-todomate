@@ -1,5 +1,6 @@
 package dev.spring.todomate.todomate_app.service;
 
+import dev.spring.todomate.todomate_app.dto.DiaryResponse;
 import dev.spring.todomate.todomate_app.model.Diary;
 import dev.spring.todomate.todomate_app.model.User;
 import dev.spring.todomate.todomate_app.repository.DiaryRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +22,14 @@ public class DiaryServiceImpl implements DiaryService {
     private final UserRepository userRepository;
 
     @Override
-    public List<Diary> findAll(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow();
+    public List<DiaryResponse> findAll(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(userId + "에 해당하는 userId가 존재하지 않습니다."));
         List<Diary> diaries = diaryRepository.findAllByUserId(user.getId());
-        return diaries;
+        List<DiaryResponse> diaryResponses = diaries.stream().map(DiaryResponse::from)
+                .collect(Collectors.toList());
+        return diaryResponses;
     }
+
 
     @Override
     public Diary addDiary(Long userId, Diary diary) {
