@@ -21,7 +21,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/diaries")
+@RequestMapping("api/diaries")
 public class DiaryController {
 
     private final DiaryService diaryService;
