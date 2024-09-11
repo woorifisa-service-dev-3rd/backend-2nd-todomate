@@ -9,7 +9,7 @@ import java.util.List;
 public interface DiaryService {
     List<DiaryResponse> findAll(Long userId);
     DiaryResponse addDiary(Long userId, DiaryRequest diaryRequest);
-    Diary updateDiary(Long userId, Long diaryId, Diary updatedDiary);
+    DiaryResponse updateDiary(Long userId, Long diaryId, DiaryRequest diaryRequest);
     Diary findById(Long diaryId);
     void deleteDiary(Long userId, Long diaryId);
 }

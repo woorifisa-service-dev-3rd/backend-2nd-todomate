@@ -40,27 +40,17 @@ public class DiaryController {
     @PostMapping("/add")
     public ResponseEntity<DiaryResponse> addDiary(HttpSession session, @RequestBody @Valid DiaryRequest diaryRequest) {
         Long userId = getUserIdFromSession(session);
-        System.out.println("title : " + diaryRequest.getTitle() + ", content : " + diaryRequest.getContent());
         DiaryResponse diary = diaryService.addDiary(userId, diaryRequest);
+        log.debug("addedDiary = " + diary);
         return new ResponseEntity<>(diary, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{diaryId}/edit")
-    public String showEditDiaryForm(@PathVariable Long diaryId, HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("userId");
-        Diary foundDiary = diaryService.findById(diaryId);
-        model.addAttribute("diary", foundDiary);
-        return "createOrUpdateDiaryForm";
-    }
-
-    @PostMapping("/{diaryId}/edit")
-    public String editDiary(@PathVariable Long diaryId, HttpServletRequest request, Diary diary) {
-        HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("userId");
-        Diary updatedDiary = diaryService.updateDiary(1L, diaryId, diary);
+    @PutMapping("/{id}")
+    public ResponseEntity<DiaryResponse> editDiary(HttpSession session, @PathVariable Long id, @RequestBody @Valid DiaryRequest diaryRequest) {
+        Long userId = getUserIdFromSession(session);
+        DiaryResponse updatedDiary = diaryService.updateDiary(userId, id, diaryRequest);
         log.debug("updatedDiary = " + updatedDiary);
-        return "redirect:/diaries/list";
+        return new ResponseEntity<>(updatedDiary, HttpStatus.OK);
     }
 
     @PostMapping("/{diaryId}/delete")

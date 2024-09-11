@@ -29,7 +29,7 @@ public class Diary extends BaseEntity{
     @JoinColumn(name = "users_user_id")
     private User user;
 
-    public void updateDiary(Diary diaryToUpdate) {
+    public void updateDiary(DiaryRequest diaryToUpdate) {
         this.title = diaryToUpdate.getTitle();
         this.content = diaryToUpdate.getContent();
     }
