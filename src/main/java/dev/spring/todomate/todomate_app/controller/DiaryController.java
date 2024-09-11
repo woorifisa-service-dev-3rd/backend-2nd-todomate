@@ -10,13 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -39,20 +37,12 @@ public class DiaryController {
         return new ResponseEntity<>(diaries, HttpStatus.OK);
     }
 
-    @GetMapping("/add")
-    public ResponseEntity<DiaryResponse> addDiary(HttpSession session, DiaryRequest diaryRequest) {
+    @PostMapping("/add")
+    public ResponseEntity<DiaryResponse> addDiary(HttpSession session, @RequestBody @Valid DiaryRequest diaryRequest) {
         Long userId = getUserIdFromSession(session);
+        System.out.println("title : " + diaryRequest.getTitle() + ", content : " + diaryRequest.getContent());
         DiaryResponse diary = diaryService.addDiary(userId, diaryRequest);
         return new ResponseEntity<>(diary, HttpStatus.CREATED);
-    }
-
-    @PostMapping("/add")
-    public String addDiary(HttpServletRequest request, Diary diary, Model model) {
-        System.out.println("Diary = " + diary);
-        HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("userId");
-        Diary newDiary = diaryService.addDiary(1L, diary);
-        return "redirect:/diaries/list";
     }
 
     @GetMapping("/{diaryId}/edit")

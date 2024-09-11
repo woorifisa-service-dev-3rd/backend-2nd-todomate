@@ -36,9 +36,9 @@ public class DiaryServiceImpl implements DiaryService {
     public DiaryResponse addDiary(Long userId, DiaryRequest diaryRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(userId + "에 해당하는 userId가 존재하지 않습니다."));
         Diary diary = Diary.from(diaryRequest, user);
-        DiaryResponse diaryResponse = DiaryResponse.from(diary);
-        diaryRepository.save(newDiary);
-        return newDiary;
+        Diary savedDiary = diaryRepository.save(diary);
+        DiaryResponse diaryResponse = DiaryResponse.from(savedDiary);
+        return diaryResponse;
     }
 
     @Override
