@@ -1,9 +1,12 @@
 package dev.spring.todomate.todomate_app.controller;
 
+import dev.spring.todomate.todomate_app.dto.DiaryResponse;
 import dev.spring.todomate.todomate_app.model.Diary;
 import dev.spring.todomate.todomate_app.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +26,16 @@ public class DiaryController {
 
     private final DiaryService diaryService;
 
-    @GetMapping("/list")
-    public String diaryList(Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    private Long getUserIdFromSession(HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
-        List<Diary> diaries = diaryService.findAll(1L);
-        model.addAttribute("diaries", diaries);
-        return "diaryList";
+        return 1L;
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<DiaryResponse>> findAll(HttpSession session) {
+        Long userId = getUserIdFromSession(session);
+        List<DiaryResponse> diaries = diaryService.findAll(userId);
+        return new ResponseEntity<>(diaries, HttpStatus.OK);
     }
 
     @GetMapping("/add")
