@@ -2,6 +2,8 @@ package dev.spring.todomate.todomate_app.service;
 
 import dev.spring.todomate.todomate_app.dto.DiaryRequest;
 import dev.spring.todomate.todomate_app.dto.DiaryResponse;
+import dev.spring.todomate.todomate_app.exception.DiaryNotFoundException;
+import dev.spring.todomate.todomate_app.exception.UserNotFoundException;
 import dev.spring.todomate.todomate_app.model.Diary;
 import dev.spring.todomate.todomate_app.model.User;
 import dev.spring.todomate.todomate_app.repository.DiaryRepository;
@@ -24,7 +26,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public List<DiaryResponse> findAll(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(userId + "에 해당하는 userId가 존재하지 않습니다."));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         List<Diary> diaries = diaryRepository.findAllByUserId(user.getId());
         List<DiaryResponse> diaryResponses = diaries.stream().map(DiaryResponse::from)
                 .collect(Collectors.toList());
@@ -34,7 +36,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public DiaryResponse addDiary(Long userId, DiaryRequest diaryRequest) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(userId + "에 해당하는 userId가 존재하지 않습니다."));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         Diary diary = Diary.from(diaryRequest, user);
         Diary savedDiary = diaryRepository.save(diary);
         DiaryResponse diaryResponse = DiaryResponse.from(savedDiary);
@@ -43,8 +45,8 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public DiaryResponse updateDiary(Long userId, Long diaryId, DiaryRequest diaryRequest) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(userId + "에 해당하는 userId가 존재하지 않습니다."));
-        Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> new RuntimeException(diaryId + "에 해당하는 diaryId가 존재하지 않습니다."));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> new DiaryNotFoundException(diaryId));
         diary.updateDiary(diaryRequest);
         DiaryResponse diaryResponse = DiaryResponse.from(diary);
         return diaryResponse;
@@ -52,15 +54,15 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public DiaryResponse findById(Long userId, Long diaryId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(userId + "에 해당하는 userId가 존재하지 않습니다."));
-        Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> new RuntimeException(diaryId + "에 해당하는 diaryId가 존재하지 않습니다."));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> new DiaryNotFoundException(diaryId));
         return DiaryResponse.from(diary);
     }
 
     @Override
     public Diary deleteDiary(Long userId, Long diaryId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(userId + "에 해당하는 userId가 존재하지 않습니다."));
-        Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> new RuntimeException(diaryId + "에 해당하는 diaryId가 존재하지 않습니다."));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> new DiaryNotFoundException(diaryId));
         diaryRepository.deleteById(diary.getId());
         return diary;
     }
