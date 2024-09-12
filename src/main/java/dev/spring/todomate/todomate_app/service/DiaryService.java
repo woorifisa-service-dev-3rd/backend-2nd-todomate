@@ -11,5 +11,5 @@ public interface DiaryService {
     DiaryResponse addDiary(Long userId, DiaryRequest diaryRequest);
     DiaryResponse updateDiary(Long userId, Long diaryId, DiaryRequest diaryRequest);
     Diary findById(Long diaryId);
-    void deleteDiary(Long userId, Long diaryId);
+    Diary deleteDiary(Long userId, Long diaryId);
 }

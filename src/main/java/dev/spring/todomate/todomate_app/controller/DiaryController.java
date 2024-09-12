@@ -40,24 +40,24 @@ public class DiaryController {
     @PostMapping("/add")
     public ResponseEntity<DiaryResponse> addDiary(HttpSession session, @RequestBody @Valid DiaryRequest diaryRequest) {
         Long userId = getUserIdFromSession(session);
-        DiaryResponse diary = diaryService.addDiary(userId, diaryRequest);
-        log.debug("addedDiary = " + diary);
-        return new ResponseEntity<>(diary, HttpStatus.CREATED);
+        DiaryResponse addedDiary = diaryService.addDiary(userId, diaryRequest);
+        log.info("addedDiary = " + addedDiary);
+        return new ResponseEntity<>(addedDiary, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<DiaryResponse> editDiary(HttpSession session, @PathVariable Long id, @RequestBody @Valid DiaryRequest diaryRequest) {
         Long userId = getUserIdFromSession(session);
         DiaryResponse updatedDiary = diaryService.updateDiary(userId, id, diaryRequest);
-        log.debug("updatedDiary = " + updatedDiary);
+        log.info("updatedDiary = " + updatedDiary);
         return new ResponseEntity<>(updatedDiary, HttpStatus.OK);
     }
 
-    @PostMapping("/{diaryId}/delete")
-    public String deleteDiary(@PathVariable Long diaryId, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("userId");
-        diaryService.deleteDiary(1L, diaryId);
-        return "redirect:/diaries/list";
+    @PostMapping("/{id}")
+    public ResponseEntity<String> deleteDiary(HttpSession session, @PathVariable Long id) {
+        Long userId = getUserIdFromSession(session);
+        Diary deletedDiary = diaryService.deleteDiary(userId, id);
+        log.info("deletedDiary = " + deletedDiary);
+        return new ResponseEntity<>("Deleted successfully", HttpStatus.OK);
     }
 }
