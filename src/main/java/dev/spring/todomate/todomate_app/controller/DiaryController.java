@@ -37,6 +37,14 @@ public class DiaryController {
         return new ResponseEntity<>(diaries, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<DiaryResponse> getDiaryById(HttpSession session, @PathVariable Long id) {
+        Long userId = getUserIdFromSession(session);
+        DiaryResponse diary = diaryService.findById(userId, id);
+        log.info("foundDiary = " + diary);
+        return new ResponseEntity<>(diary, HttpStatus.OK);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<DiaryResponse> addDiary(HttpSession session, @RequestBody @Valid DiaryRequest diaryRequest) {
         Long userId = getUserIdFromSession(session);

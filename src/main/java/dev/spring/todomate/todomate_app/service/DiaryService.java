@@ -10,6 +10,6 @@ public interface DiaryService {
     List<DiaryResponse> findAll(Long userId);
     DiaryResponse addDiary(Long userId, DiaryRequest diaryRequest);
     DiaryResponse updateDiary(Long userId, Long diaryId, DiaryRequest diaryRequest);
-    Diary findById(Long diaryId);
+    DiaryResponse findById(Long userId, Long diaryId);
     Diary deleteDiary(Long userId, Long diaryId);
 }

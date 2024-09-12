@@ -51,8 +51,10 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Diary findById(Long diaryId) {
-        return diaryRepository.findById(diaryId).orElseThrow();
+    public DiaryResponse findById(Long userId, Long diaryId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(userId + "에 해당하는 userId가 존재하지 않습니다."));
+        Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> new RuntimeException(diaryId + "에 해당하는 diaryId가 존재하지 않습니다."));
+        return DiaryResponse.from(diary);
     }
 
     @Override
