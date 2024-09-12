@@ -27,7 +27,7 @@ public class DiaryController {
 
     private Long getUserIdFromSession(HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
-        return 1L;
+        return userId;
     }
 
     @GetMapping("/list")
